@@ -1,4 +1,7 @@
 const express = require('express');
+const app = express();
+
+app.use(express.json());
 
 const mongoose = require('mongoose');
 
@@ -31,10 +34,27 @@ mongoose.connect("mongodb+srv://kumarkartikay005:84y4hyuazdONyKfs@cluster0.wbvoj
         required : true
     }
 
- })
+ });
+
+const productModel = mongoose.model('products', productSchema);
 
 
-const app = express();
+//Create
+
+app.post('/api/products', (req,res) => {
+    
+    const product = productModel.create({
+        product_name : req.body.product_name,
+        product_price : req.body.product_price,
+        isInStock : req.body.isInStock,
+        Category : req.body.Category
+    })
+    
+    console.log(product)
+    
+    return res.status(201).json({message: "Product Created"});
+})
+
 
 app.listen(8086, () =>{
     console.log("Server Started at 8086")
