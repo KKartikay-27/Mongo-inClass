@@ -1,0 +1,1 @@
+mongodb+srv://kumarkartikay005:84y4hyuazdONyKfs@cluster0.wbvojwc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
