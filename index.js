@@ -11,6 +11,29 @@ mongoose.connect("mongodb+srv://kumarkartikay005:84y4hyuazdONyKfs@cluster0.wbvoj
     console.log(err);
 });
 
+
+//ProductScheme
+ const productSchema = new mongoose.Schema({
+    product_name : {
+        type : String,
+        required : true
+    },
+    product_price : {
+        type : String,
+        required : true
+    },
+    isInStock : {
+        type : Boolean,
+        required : true
+    },
+    Category : {
+        type : String,
+        required : true
+    }
+
+ })
+
+
 const app = express();
 
 app.listen(8086, () =>{
