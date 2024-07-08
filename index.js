@@ -1,12 +1,13 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
 
 app.use(express.json());
 
 const mongoose = require('mongoose');
 const { Route } = require('react-router-dom');
 
-mongoose.connect("mongodb+srv://kumarkartikay005:84y4hyuazdONyKfs@cluster0.wbvojwc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect(process.env.MONGO_URL)
 .then(() =>{
     console.log("Db connected");
 })
@@ -57,16 +58,13 @@ app.post('/api/products', (req,res) => {
 })
 
 
-app.listen(8086, () =>{
-    console.log("Server Started at 8086")
-})
 
 //get route
 
 //find all entries with isinstock = true
 app.get('/api/products',async(req,res) =>{
     const allProducts = await productModel.find({isInStock: true});
-
+    
     return res.json(allProducts);
 })
 
@@ -74,6 +72,28 @@ app.get('/api/products',async(req,res) =>{
 //find all entries with a specific id
 app.get('/api/products/:id',async(req,res) =>{
     const product = await productModel.findById(req.params.id);
-
+    
     return res.json(product);
+})
+
+//Update product
+app.put('/api/products/:id',async(req,res) =>{
+    const updatedProduct = await productModel.findByIdAndUpdate(req.params.id, req.body);
+    
+    return res.json(updatedProduct);;
+})
+
+//Delete product
+app.delete('/api/products/:id',async(req,res) =>{
+    const deletedProduct = await productModel.findByIdAndDelete(req.params.id); 
+    
+    res.status(200).json({
+        message: "Product Deleted",
+        product: deletedProduct
+    });
+})
+
+
+app.listen(8086, () =>{
+    console.log("Server Started at 8086")
 })
