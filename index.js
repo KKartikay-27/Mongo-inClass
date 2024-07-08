@@ -3,6 +3,7 @@ const app = express();
 require('dotenv').config();
 
 const productRoutes = require('./routes/productRoutes')
+const userRoutes = require('./routes/userRoutes')
 
 app.use(express.json());
 
@@ -19,6 +20,7 @@ mongoose.connect(process.env.MONGO_URL)
 });
 
 app.use('/api/products',productRoutes);
+app.use('/api/users',userRoutes);
 
 
 app.listen(8086, () =>{
